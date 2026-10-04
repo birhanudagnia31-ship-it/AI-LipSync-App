@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI LipSync</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b0b0f;
+  color: white;
+}
+
+.container {
+  max-width: 500px;
+  margin: auto;
+  padding: 25px 18px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #aaa;
+  margin-bottom: 25px;
+}
+
+.card {
+  background: #17171d;
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 18px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+input[type="file"] {
+  width: 100%;
+  padding: 12px;
+  background: #22232a;
+  color: white;
+  border-radius: 10px;
+  border: 1px solid #333;
+}
+
+.preview {
+  width: 100%;
+  max-height: 350px;
+  object-fit: contain;
+  margin-top: 15px;
+  border-radius: 12px;
+  display: none;
+}
+
+audio {
+  width: 100%;
+  margin-top: 15px;
+  display: none;
+}
+
+button {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  background: #6c4cff;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #444;
+}
+
+.status {
+  text-align: center;
+  color: #aaa;
+  margin-top: 18px;
+  min-height: 24px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>🎙️ AI LipSync</h1>
+
+  <div class="subtitle">
+    Turn a photo into a talking video
+  </div>
+
+  <div class="card">
+
+    <label>1. Choose a photo</label>
+
+    <input
+      type="file"
+      id="imageInput"
+      accept="image/*"
+    >
+
+    <img
+      id="imagePreview"
+      class="preview"
+    >
+
+  </div>
+
+  <div class="card">
+
+    <label>2. Choose your voice</label>
+
+    <input
+      type="file"
+      id="audioInput"
+      accept="audio/*"
+    >
+
+    <audio
+      id="audioPreview"
+      controls
+    ></audio>
+
+  </div>
+
+  <div class="card">
+
+    <button id="generateButton">
+      Generate Lip-Sync Video
+    </button>
+
+    <div id="status" class="status">
+      Ready
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+const imageInput = document.getElementById("imageInput");
+const audioInput = document.getElementById("audioInput");
+const imagePreview = document.getElementById("imagePreview");
+const audioPreview = document.getElementById("audioPreview");
+const generateButton = document.getElementById("generateButton");
+const status = document.getElementById("status");
+
+imageInput.addEventListener("change", function () {
+
+  const file = this.files[0];
+
+  if (!file) return;
+
+  imagePreview.src = URL.createObjectURL(file);
+  imagePreview.style.display = "block";
+
+});
+
+audioInput.addEventListener("change", function () {
+
+  const file = this.files[0];
+
+  if (!file) return;
+
+  audioPreview.src = URL.createObjectURL(file);
+  audioPreview.style.display = "block";
+
+});
+
+generateButton.addEventListener("click", function () {
+
+  if (!imageInput.files[0]) {
+    status.textContent = "Please choose a photo first.";
+    return;
+  }
+
+  if (!audioInput.files[0]) {
+    status.textContent = "Please choose an audio file.";
+    return;
+  }
+
+  status.textContent = "Preparing AI LipSync...";
+
+  setTimeout(function () {
+    status.textContent =
+      "The AI engine will be connected in the next step.";
+  }, 1200);
+
+});
+
+</script>
+
+</body>
+</html>
